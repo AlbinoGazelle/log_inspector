@@ -13,7 +13,8 @@ def authlog_reader(name):
     try:
         f = open(sys.argv[1], "r")
         for x in f:
-            print(x)
+            if "FAILED" in x:
+                print(x)
     except FileNotFoundError:
         print("Couldn't find file, please enter full path!")
 authlog_reader(sys.argv[1])
