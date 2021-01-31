@@ -7,7 +7,7 @@ def is_installed(name):
         subprocess.Popen([name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).communicate()
     except OSError:
         return False
-    return Tru
+    return True
 #Jan 30 19:56:58 ubuntu su: FAILED SU (to root) exp on pts/1
 def authlog_reader(name):
     try:
