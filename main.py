@@ -31,7 +31,7 @@ def authlog_reader(name):
             #get lines for failed password attempts
             elif "incorrect password attempts" in x:
                 password_attempt.append(txt[5])
-                print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[16]}")
+                print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[15]}")
             elif "authentication failure" in x:
                 auth_failure.append(txt[15])
                 print(f"{txt[15]} failed to authenticate as another user!")
