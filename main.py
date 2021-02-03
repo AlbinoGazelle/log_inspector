@@ -23,7 +23,7 @@ def authlog_reader(name):
             #get lines for commands that are executed
             elif "COMMAND" in x and "incorrect password" not in x:
                 command_attempt.append(txt[7])
-                print(f"user: {txt[6]} {txt[7]} executed: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]}")
+                print(f"user: {txt[8]} {txt[7]} executed: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]}")
             #get lines for failed password attempts
             elif "incorrect password attempts" in x:
                 password_attempt.append(txt[7])
