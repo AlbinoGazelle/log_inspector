@@ -22,12 +22,16 @@ def authlog_reader(name):
                 print(f"user: {txt[9]} attempted to SU to user: {txt[8].rstrip(')')} at {txt[0], txt[1], txt[2]}")
             #get lines for commands that are executed
             elif "COMMAND" in x and "incorrect password" not in x:
+                if ":" in x:
+                    txt[5] = txt[5].replace(":", "")
                 command_attempt.append(txt[5])
                 print(f"user: {txt[5]} executed: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]}")
             #get lines for failed password attempts
             elif "incorrect password attempts" in x:
                 password_attempt.append(txt[5])
                 print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[16]}")
+            """ elif "authentication failure" in x:
+                auth_failure.append(txt[]) """
     except FileNotFoundError:
         print("Couldn't find file, please enter full path!")
     except PermissionError:
