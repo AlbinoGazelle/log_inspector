@@ -11,6 +11,7 @@ def authlog_reader(name):
     password_attempt = []
     failed_attempt = []
     command_attempt = []
+    auth_failure = []
     print("Printing useful information: \n")
     try:
         f = open(sys.argv[1], "r")
@@ -22,6 +23,7 @@ def authlog_reader(name):
                 print(f"user: {txt[9]} attempted to SU to user: {txt[8].rstrip(')')} at {txt[0], txt[1], txt[2]}")
             #get lines for commands that are executed
             elif "COMMAND" in x and "incorrect password" not in x:
+                #fix weird colon issue I was getting in 20.04
                 if ":" in x:
                     txt[5] = txt[5].replace(":", "")
                 command_attempt.append(txt[5])
@@ -30,8 +32,9 @@ def authlog_reader(name):
             elif "incorrect password attempts" in x:
                 password_attempt.append(txt[5])
                 print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[16]}")
-            """ elif "authentication failure" in x:
-                auth_failure.append(txt[]) """
+            elif "authentication failure" in x:
+                auth_failure.append(txt[15])
+                print(f"{txt[15]} failed to authenticate as another user!")
     except FileNotFoundError:
         print("Couldn't find file, please enter full path!")
     except PermissionError:
@@ -51,6 +54,9 @@ def authlog_reader(name):
     for x in unique_users_command:
         print(f"{x} executed a command {command_attempt.count(x)} times ")
 
+    unique_users_auth = get_unique(auth_failure)
+    for x in unique_users_auth:
+        print(f"{x} tried authentication as a user {auth_failure.count(x)} times")
 if len(sys.argv) !=2:
     print("usage: ./inspector.sh path_to_log_file")
     exit()
