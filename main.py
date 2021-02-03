@@ -15,19 +15,19 @@ def authlog_reader(name):
     try:
         f = open(sys.argv[1], "r")
         for x in f:
-            txt = x.split(" ")
+            txt = x.split()
             #get lines for failed SU attemps
             if "FAILED" in x:
                 failed_attempt.append(txt[9])
                 print(f"user: {txt[8]} {txt[9]} attempted to SU to user: {txt[8].rstrip(')')} at {txt[0], txt[1], txt[2]}")
             #get lines for commands that are executed
             elif "COMMAND" in x and "incorrect password" not in x:
-                command_attempt.append(txt[7])
-                print(f"user: {txt[6]} {txt[7]} executed: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]}")
+                command_attempt.append(txt[5])
+                print(f"user: {txt[5]} executed: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]}")
             #get lines for failed password attempts
             elif "incorrect password attempts" in x:
-                password_attempt.append(txt[7])
-                print(f"user: {txt[7]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[18]}")
+                password_attempt.append(txt[5])
+                print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[18]}")
     except FileNotFoundError:
         print("Couldn't find file, please enter full path!")
     except PermissionError:
