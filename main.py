@@ -19,7 +19,7 @@ def authlog_reader(name):
             #get lines for failed SU attemps
             if "FAILED" in x:
                 failed_attempt.append(txt[9])
-                print(f"user: {txt[8]} {txt[9]} attempted to SU to user: {txt[8].rstrip(')')} at {txt[0], txt[1], txt[2]}")
+                print(f"user: {txt[9]} attempted to SU to user: {txt[8].rstrip(')')} at {txt[0], txt[1], txt[2]}")
             #get lines for commands that are executed
             elif "COMMAND" in x and "incorrect password" not in x:
                 command_attempt.append(txt[5])
