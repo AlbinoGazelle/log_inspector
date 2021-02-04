@@ -47,7 +47,6 @@ def authlog_reader(name):
                 if(print_check):
                     print(f"{txt[14]} failed to authenticate as another user!")
             elif "Failed password" in x and "sshd" in x:
-                print(txt)
                 ssh_failure.append(txt[12])
                 if(print_check):
                     print(f"user: {txt[10]} attempted to ssh from the IP address: {txt[12]} at {txt[0], txt[1], txt[2]}")
@@ -77,6 +76,9 @@ def authlog_reader(name):
     for x in unique_users_auth:
         print(f"{x} tried authenticating as a user {auth_failure.count(x)} times")
 
+    unique_users_ssh = get_unique(ssh_failure)
+    for x in unique_users_ssh:
+        print(f"{x} tried to ssh to this machine {ssh_failure.count(x)} times ")
 if len(sys.argv) <2:
     print("usage: ./inspector.sh path_to_log_file")
     exit()
