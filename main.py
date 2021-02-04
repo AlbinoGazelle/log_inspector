@@ -41,17 +41,18 @@ def authlog_reader(name):
                 password_attempt.append(txt[5])
                 if(print_check):
                     print(f"user: {txt[5]} tried to execute: {x[x.find('COMMAND'):len(x) - 1]} at {txt[0], txt[1], txt[2]} as the {txt[16]}")
-            elif "authentication failure" in x:
+            elif "authentication failure" in x and "sshd" not in x:
                 auth_failure.append(txt[14])
                 if(print_check):
                     print(f"{txt[14]} failed to authenticate as another user!")
     except FileNotFoundError as e:
-        print("Couldn't find file, please enter full path!" + e)
+        print("Couldn't find file, please enter full path! Error: " + e)
         exit()
-    except PermissionError:
-        print("Insufficient permissions to read this file, maybe run as sudo?")
+    except PermissionError as e:
+        print("Insufficient permissions to read this file, maybe run as sudo? Error: "+e)
         exit()
-    print("Printing how many times each user did something:")
+
+    print("Printing how many times each user did something:\n")
     #print the number of times users did something
 
     unique_users_password = get_unique(password_attempt)
