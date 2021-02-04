@@ -1,10 +1,16 @@
 import sys
 import os
 print_check = False
+tail_check = False
 if("-v" in sys.argv):
         print_check =  True
-if(print_check == False):
+if("auth.log" not in sys.argv):
+    tail_check = True
+
+if(print_check == False and tail_check == False):
     print("Use the -v flag to increase verbositity and display what each user did!\nExample: ./inspector -v path_to_log\n")
+
+
 
 #helper function for getting unique values from a list
 def get_unique(list):
@@ -79,6 +85,7 @@ def authlog_reader(name):
     unique_users_ssh = get_unique(ssh_failure)
     for x in unique_users_ssh:
         print(f"{x} tried to ssh to this machine {ssh_failure.count(x)} times ")
+
 if len(sys.argv) <2:
     print("usage: ./inspector.sh path_to_log_file")
     exit()
