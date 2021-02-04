@@ -19,6 +19,7 @@ def authlog_reader(name):
     failed_attempt = []
     command_attempt = []
     auth_failure = []
+    ssh_failure = []
     try:
         f = open(name, "r")
         for x in f:
@@ -45,6 +46,10 @@ def authlog_reader(name):
                 auth_failure.append(txt[14])
                 if(print_check):
                     print(f"{txt[14]} failed to authenticate as another user!")
+            elif "failed password" and "sshd" in x:
+                ssh_failure.append(txt[12])
+                if(print_check):
+                    print(f"user: {txt[10]} attempted to ssh from the IP address: {txt[12]} at {txt[0], txt[1], txt[2]}")
     except FileNotFoundError as e:
         print("Couldn't find file, please enter full path! Error: " + e)
         exit()
