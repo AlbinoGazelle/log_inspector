@@ -1,5 +1,5 @@
 import sys
-
+import os
 print_check = False
 if("-v" in sys.argv):
         print_check =  True
@@ -53,8 +53,8 @@ def authlog_reader(name):
     except FileNotFoundError as e:
         print("Couldn't find file, please enter full path! Error: " + e)
         exit()
-    except PermissionError as e:
-        print("Insufficient permissions to read this file, maybe run as sudo? Error: "+e)
+    except PermissionError:
+        print("Insufficient permissions to read this file, maybe run as sudo? Error: ")
         exit()
 
     print("Printing how many times each user did something:\n")
@@ -84,3 +84,6 @@ if len(sys.argv) <2:
     exit()
 elif "auth.log" in sys.argv[len(sys.argv) - 1]:
     authlog_reader(sys.argv[len(sys.argv) - 1])
+else:
+    print("Dont understand this log file. Defaulting to using tail.")
+    os.system(f"tail {sys.argv[len(sys.argv)-1]}")
