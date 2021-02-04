@@ -46,7 +46,7 @@ def authlog_reader(name):
                 auth_failure.append(txt[14])
                 if(print_check):
                     print(f"{txt[14]} failed to authenticate as another user!")
-            elif "failed password" and "sshd" in x:
+            elif "failed password" in x and "sshd" in x:
                 print(txt)
                 ssh_failure.append(txt[12])
                 if(print_check):
